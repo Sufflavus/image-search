@@ -1,5 +1,6 @@
 var express = require('express');
 var app = express();
+var Bing = require('node-bing-api')({ accKey: "your-account-key" }); // https://www.npmjs.com/package/node-bing-api
 
 app.get('/', function (req, res) {
   res.send('Hello World!');
@@ -7,7 +8,7 @@ app.get('/', function (req, res) {
 
 app.get('/api/imagesearch/*', function (req, res) {
     var searchRequest = req.params[0];
-    var offset = req.query.offset;
+    var offset = req.query && req.query.offset ? +req.query.offset : 0;
     console.log(offset)
     res.send('Hello World!');
 });
