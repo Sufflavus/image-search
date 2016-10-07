@@ -10,6 +10,9 @@ app.get('/api/imagesearch/*', function (req, res) {
     var searchRequest = req.params[0];
     var offset = req.query && req.query.offset ? +req.query.offset : 0;
     console.log(offset)
+    Bing.images(searchRequest, {skip: offset}, function(error, res, body){
+      console.log(body);
+    });
     res.send('Hello World!');
 });
 
