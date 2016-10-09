@@ -13,25 +13,35 @@ function Dal (MongoClient) {
           }
           
           db = database;
+          
           console.log("Listening on port 3000");
+          
           callback();
         });
     };
     
 	this.getHistory = function (res) {
-	    var urls = db.collection(historyCollectionName);
+	    var history = db.collection(historyCollectionName);
         
-        urls.find({ $query: {}, $orderby: { date: -1 } }).limit(10).toArray(function(err, items) {
-            if (err) {
-                throw err;
-            }
-        });
+        history.find({ $query: {}, $orderby: { date: -1 } })
+            .limit(10)
+            .toArray(function(err, items) {
+                if (err) {
+                    throw err;
+                }
+                
+                res.json(items);
+            });
 	};
 	
-	this.addRequestInHistory = function (req, res) {
-	    var urls = db.collection(historyCollectionName);
-        var historyItem = {query: "", date: ""};
+	this.addRequestInHistory = function (searchRequest, res) {
+	    var history = db.collection(historyCollectionName);
         
-        urls.insertOne(historyItem);
+        var historyItem = {
+            query: searchRequest, 
+            date: new Date()
+        };
+        
+        history.insertOne(historyItem);
 	};
 }
