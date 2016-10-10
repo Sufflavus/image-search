@@ -9,11 +9,18 @@ app.get('/', function (req, res) {
 app.get('/api/imagesearch/*', function (req, res) {
     var searchRequest = req.params[0];
     var offset = req.query && req.query.offset ? +req.query.offset : 0;
-    console.log(process.env.SEARCH_KEY)
-    Bing.images(searchRequest, { top: 10, skip: offset }, function(error, res, body){
-      console.log(res);
+    console.log(searchRequest)
+    Bing.images(searchRequest, { top: 10, skip: offset }, function(error, response, body) {
+      var results = body.d.results.map(function(image) {
+        return {
+          "url": image.MediaUrl,
+          "snippet": image.Title,
+          "thumbnail": image.Thumbnail.MediaUrl,
+          "context": image.SourceUrl
+        };
+      });
+      res.json(results);
     });
-    res.send('Hello World!');
 });
 
 app.get('/api/latest/imagesearch/', function (req, res) {
