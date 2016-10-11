@@ -2,12 +2,12 @@
 
 module.exports = Dal;
 
-function Dal (MongoClient) {
+function Dal (mongoClient, bingApi) {
     var historyCollectionName = "history";
     var db;
     
     this.connect = function(connectionString, callback) {
-        MongoClient.connect(connectionString, function(err, database) {
+        mongoClient.connect(connectionString, function(err, database) {
           if(err) {
               throw err;
           }
@@ -44,4 +44,18 @@ function Dal (MongoClient) {
         
         history.insertOne(historyItem);
 	};
+	
+	this.search = function (searchRequest, offset, res) {
+	    bingApi.images(searchRequest, { top: 10, skip: offset }, function(error, response, body) {
+            var results = body.d.results.map(function(image) {
+                return {
+                  "url": image.MediaUrl,
+                  "snippet": image.Title,
+                  "thumbnail": image.Thumbnail.MediaUrl,
+                  "context": image.SourceUrl
+                };
+            });
+            res.json(results);
+        });
+	}
 }
