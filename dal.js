@@ -34,7 +34,7 @@ function Dal (mongoClient, bingApi) {
             });
 	};
 	
-	this.addRequestInHistory = function (searchRequest, res) {
+	this.saveRequestInHistory = function (searchRequest) {
 	    var history = db.collection(historyCollectionName);
         
         var historyItem = {

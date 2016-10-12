@@ -5,8 +5,18 @@ var mongo = require('mongodb').MongoClient;
 
 var bingApi = bing({ accKey: process.env.SEARCH_KEY });
 var dal = new Dal(mongo, bingApi);
+var path = process.cwd();
 
 var app = express();
+
+var port = process.env.PORT || 8080;
+var connectionString = process.env.CONNECTION_STRING;
+
+dal.connect(connectionString, function() {
+    app.listen(port, function () {
+        console.log('Example app listening on port ' + port);
+    });
+});
 
 app.get('/', function (req, res) {
   res.send('Hello World!');
@@ -15,24 +25,10 @@ app.get('/', function (req, res) {
 app.get('/api/imagesearch/*', function (req, res) {
     var searchRequest = req.params[0];
     var offset = req.query && req.query.offset ? +req.query.offset : 0;
-    console.log(searchRequest)
-    bingApi.images(searchRequest, { top: 10, skip: offset }, function(error, response, body) {
-      var results = body.d.results.map(function(image) {
-        return {
-          "url": image.MediaUrl,
-          "snippet": image.Title,
-          "thumbnail": image.Thumbnail.MediaUrl,
-          "context": image.SourceUrl
-        };
-      });
-      res.json(results);
-    });
+    dal.search(searchRequest, offset, res);
+    dal.saveRequestInHistory(searchRequest);
 });
 
 app.get('/api/latest/imagesearch/', function (req, res) {
-    res.send('Hello World!');
-});
-
-app.listen(8080, function () {
-  console.log('Example app listening on port 8080!');
+    dal.getHistory(res);
 });
