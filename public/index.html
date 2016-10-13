@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+
+<html>
+
+	<head>
+		<title>Image Search Abstraction Layer</title>
+		
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+	</head>
+
+	<body>
+		<div class="container">
+			<h1>
+				Image Search Abstraction Layer
+			</h1>
+			
+			<h2>
+				Example imagesearch usage:
+			</h2>
+			
+			<code>https://tata-fcc-image-search.herokuapp.com/api/imagesearch/lolcats%20funny?offset=10</code>
+			
+			<h2>
+				Example imagesearch output:
+			</h2>
+			
+			<code>
+			    {
+                    "url": "http://cdnstatic.visualizeus.com/thumbs/55/2f/cats,funny,animal,lolcats-552f88b43a77004908f4c743f8d5867d_h.jpg",
+                    "snippet": "ps lolcats",
+                    "thumbnail": "https://encrypted-tbn2.gstatic.com/images?q=tbn:ANd9GcQ-U4jx36YbHATSNg1nbgYbdplownwObivx_LDKLaTiBzwjjLHsDDJl5ss",
+                    "context": "http://vi.sualize.us/ps_funny_lolcats_animal_cats_picture_bqM.html"
+                }
+            </code>
+			
+			<h2>
+				Example latest imagesearch history usage:
+			</h2>
+			
+			<code>https://tata-fcc-image-search.herokuapp.com/api/latest/imagesearch/</code>
+			
+			<h2>
+				Example imagesearch history output:
+			</h2>
+			
+			<code>
+			    {
+                    "query": "lolcats funny",
+                    "date": "2016-10-13T20:28:58.654Z"
+                }
+            </code>
+		</div>
+	</body>
+</html>

@@ -18,8 +18,7 @@ dal.connect(connectionString, function() {
     });
 });
 
-app.get('/', function (req, res) {
-  res.send('Hello World!');
+app.get('/favicon.ico', function (req, res) {
 });
 
 app.get('/api/imagesearch/*', function (req, res) {
@@ -31,4 +30,8 @@ app.get('/api/imagesearch/*', function (req, res) {
 
 app.get('/api/latest/imagesearch/', function (req, res) {
     dal.getHistory(res);
+});
+
+app.get('/', function (req, res) {
+    res.sendFile(path + '/public/index.html');
 });
