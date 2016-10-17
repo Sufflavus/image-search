@@ -23,7 +23,16 @@ function Dal (mongoClient, bingApi) {
 	this.getHistory = function (res) {
 	    var history = db.collection(historyCollectionName);
         
-        history.find({ $query: {}, $orderby: { date: -1 } })
+        var searchQuery = { 
+            $query: {}, 
+            $orderby: { 
+                date: -1 
+            } 
+        };
+        
+        var resultFilter = { query: true, date: true, _id: false };
+        
+        history.find(searchQuery, resultFilter)
             .limit(10)
             .toArray(function(err, items) {
                 if (err) {
