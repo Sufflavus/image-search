@@ -9,7 +9,7 @@ var path = process.cwd();
 
 var app = express();
 
-var port = process.env.PORT || 8080;
+var port = process.env.PORT || 1024;
 var connectionString = process.env.CONNECTION_STRING;
 
 dal.connect(connectionString, function() {
@@ -24,8 +24,8 @@ app.get('/favicon.ico', function (req, res) {
 app.get('/api/imagesearch/*', function (req, res) {
     var searchRequest = req.params[0];
     var offset = req.query && req.query.offset ? +req.query.offset : 0;
-    dal.search(searchRequest, offset, res);
     dal.saveRequestInHistory(searchRequest);
+    dal.search(searchRequest, offset, res);
 });
 
 app.get('/api/latest/imagesearch/', function (req, res) {
