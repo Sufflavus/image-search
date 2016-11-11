@@ -1,4 +1,8 @@
 # image-search
+
+[![Heroku](https://heroku-badge.herokuapp.com/?app=tata-fcc-image-search&style=flat)](https://tata-fcc-image-search.herokuapp.com/)
+
+## Live example
 This app is runned on Heroku: [https://tata-fcc-image-search.herokuapp.com/](https://tata-fcc-image-search.herokuapp.com/)
 
 ## List of used tecnologies and libraries:
